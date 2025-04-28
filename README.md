@@ -7,7 +7,7 @@ Este es un proyecto para la gestión de estudiantes, asignaturas y profesores en
 ## 🔧 **Características** ✨
 
 - **Backend:** Node.js, Express y TypeScript. 🖥️
-- **Frontend:** HTML, CSS y JavaScript. 🌐
+- **Frontend:** HTML, CSS y JavaScript (Pendiente por actualizar).🌐 
 - **API REST:** Soporta métodos HTTP ( **GET**,  **POST**,  **PUT**, DELETE). 🔄
 - **Persistencia de Datos:** Base de datos para almacenar l **a info**rmación. 💾
 
@@ -82,6 +82,7 @@ Sigue estos pasos para configurar el proyecto en tu máquina local:
 - **PUT** /inscribe?: Actualiza las notas de una asignatura por su llave compuesta (cod_e, cod_a, ip_p, grupo, semestre) .
 - **DELETE** /imparte?: Elimina la incripcion realizada por su llave compuesta (cod_e, cod_a, ip_p, grupo, semestre).  
 ---
+
 
 ## **📄 Licencia 🔒**
     Este proyecto está bajo la licencia MIT. Para más detalles, consulta el archivo LICENSE.
