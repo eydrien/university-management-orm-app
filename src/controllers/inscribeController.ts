@@ -106,6 +106,7 @@ export const getById = async (req: Request, res: Response): Promise<void> => {
 
     if (inscripciones.length === 0) {
       res.status(400).json({ statusCode: 400, message: 'No existe registro en inscribe' });
+      return;
     }
     res.status(200).json({
       statusCode: 200,
@@ -436,6 +437,7 @@ export const update = async (req: Request, res: Response): Promise<void> => {
       res.status(400).json({
         message: 'Se requieren los parámetros query: cod_e, cod_a, id_p, grupo y semestre.'
       });
+      return;
     }
 
     // Convertir a tipos correctos (si son numéricos en el modelo)
@@ -460,10 +462,19 @@ export const update = async (req: Request, res: Response): Promise<void> => {
         statusCode: 400,
         message: 'No existe registro en inscribe'
       });
+      return;
     }
 
+    const newWhereClause = {
+      id_p: updateData.id_p ?? id_p.toString(),
+      cod_a: updateData.cod_a ?? cod_a.toString(),
+      grupo: updateData.grupo ?? grupo.toString(),
+      semestre: updateData.semestre ?? semestre.toString(),
+    };
+
+
     // Buscar el registro actualizado
-    const updatedInscribe = await Inscribe.findOne({ where: parsedParams });
+    const updatedInscribe = await Inscribe.findOne({ where: newWhereClause });
 
     res.status(200).json({
       statusCode: 200,
@@ -487,6 +498,7 @@ export const remove = async (req: Request, res: Response): Promise<void> => {
 
     if (!cod_e || !cod_a || !id_p || isNaN(grupo) || !semestre) {
       res.status(400).json({ message: 'Se requieren los parámetros query: cod_e, cod_a, id_p, grupo y semestre.' });
+      return;
     }
 
     const deleted = await Inscribe.destroy({
@@ -495,6 +507,7 @@ export const remove = async (req: Request, res: Response): Promise<void> => {
 
     if (deleted === 0) {
       res.status(400).json({ statusCode: 400, message: 'No existe registro en inscribe' });
+      return;
     }
 
     res.status(200).json({

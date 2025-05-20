@@ -36,6 +36,7 @@ export const getAll = async (req: Request, res: Response) => {
       const profesor = await Profesor.findByPk(id_p);
       if (!profesor) {
          res.status(404).json({ statusCode: 404, message: 'Profesor no encontrado' });
+         return;
       }
       res.status(200).json({
         statusCode: 200,
@@ -54,6 +55,7 @@ export const getAll = async (req: Request, res: Response) => {
       const [updated] = await Profesor.update(updateData, { where: { id_p } });
       if (updated === 0) {
         res.status(404).json({ statusCode: 404, message: 'Profesor no encontrado' });
+        return;
       }
       const updatedProfesor = await Profesor.findByPk(id_p);
       res.status(200).json({
@@ -72,6 +74,7 @@ export const getAll = async (req: Request, res: Response) => {
       const deleted = await Profesor.destroy({ where: { id_p } });
       if (deleted === 0) {
         res.status(404).json({ statusCode: 404, message: 'Profesor no encontrado' });
+        return;
       }
       res.status(200).json({
         statusCode: 200,

@@ -29,12 +29,13 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 //Obtener solo un estudiante
-export const getOne = async (req: Request, res: Response): Promise <void> => {
+export const getOne = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cod_e } = req.params;
     const estudiante = await Estudiante.findByPk(cod_e);
     if (!estudiante) {
-       res.status(404).json({ statusCode: 404, message: 'Estudiante no encontrado' });
+      res.status(404).json({ statusCode: 404, message: 'Estudiante no encontrado' });
+      return;
     }
     res.status(200).json({
       statusCode: 200,
@@ -46,13 +47,14 @@ export const getOne = async (req: Request, res: Response): Promise <void> => {
   }
 };
 //actualizar estudiante
-export const update = async (req: Request, res: Response): Promise <void> => {
+export const update = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cod_e } = req.params;
     const updateData = req.body;
     const [updated] = await Estudiante.update(updateData, { where: { cod_e } });
     if (updated === 0) {
-       res.status(404).json({ statusCode: 404, message: 'Estudiante no encontrado' });
+      res.status(404).json({ statusCode: 404, message: 'Estudiante no encontrado' });
+      return;
     }
     const updatedEstudiante = await Estudiante.findByPk(cod_e);
     res.status(200).json({
@@ -65,12 +67,13 @@ export const update = async (req: Request, res: Response): Promise <void> => {
   }
 };
 
-export const remove = async (req: Request, res: Response): Promise <void> => {
+export const remove = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cod_e } = req.params;
     const deleted = await Estudiante.destroy({ where: { cod_e } });
     if (deleted === 0) {
-       res.status(404).json({ statusCode: 404, message: 'Estudiante no encontrado' });
+      res.status(404).json({ statusCode: 404, message: 'Estudiante no encontrado' });
+      return;
     }
     res.status(200).json({
       statusCode: 200,

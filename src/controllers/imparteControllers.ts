@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import Imparte from '../models/Imparte';
 import Profesor from '../models/Profesor';
 import Asignatura from '../models/Asignatura';
+import { where } from 'sequelize';
 
 
 
@@ -85,6 +86,7 @@ export const getByIdP = async (req: Request, res: Response): Promise<void> => {
 
     if (imparteList.length === 0) {
       res.status(400).json({ statusCode: 400, message: 'No existe registro en imparte' });
+      return;
     }
     res.status(200).json({
       statusCode: 200,
@@ -127,6 +129,7 @@ export const getByCodA = async (req: Request, res: Response): Promise<void> => {
 
     if (imparteList.length === 0) {
       res.status(400).json({ statusCode: 400, message: 'No existe registro en imparte' });
+      return;
     }
     res.status(200).json({
       statusCode: 200,
@@ -169,25 +172,27 @@ export const update = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    const newWhereClause = {
+      id_p: updateData.id_p ?? id_p.toString(),
+      cod_a: updateData.cod_a ?? cod_a.toString(),
+      grupo: updateData.grupo ?? grupo.toString(),
+      semestre: updateData.semestre ?? semestre.toString(),
+    };
+
     const updatedImparte = await Imparte.findOne({
-      where: {
-        id_p: id_p.toString(),
-        cod_a: cod_a.toString(),
-        grupo: grupo.toString(),
-        semestre: semestre.toString(),
-      },
+      where: newWhereClause,
     });
 
     res.status(200).json({
       statusCode: 200,
       message: 'Imparte actualizado exitosamente',
       data: updatedImparte,
+      /* where: newWhereClause, */
     });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 export const remove = async (req: Request, res: Response): Promise<void> => {
   try {

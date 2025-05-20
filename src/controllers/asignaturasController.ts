@@ -29,12 +29,13 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 
-export const getOne = async (req: Request, res: Response): Promise <void> => {
+export const getOne = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cod_a } = req.params;
     const asignatura = await Asignatura.findByPk(cod_a);
     if (!asignatura) {
       res.status(404).json({ statusCode: 404, message: 'Asignatura no encontrada' });
+      return;
     }
     res.status(200).json({
       statusCode: 200,
@@ -46,13 +47,14 @@ export const getOne = async (req: Request, res: Response): Promise <void> => {
   }
 };
 
-export const update = async (req: Request, res: Response): Promise <void> => {
+export const update = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cod_a } = req.params;
     const updateData = req.body;
     const [updated] = await Asignatura.update(updateData, { where: { cod_a } });
     if (updated === 0) {
-       res.status(404).json({ statusCode: 404, message: 'Asignatura no encontrada' });
+      res.status(404).json({ statusCode: 404, message: 'Asignatura no encontrada' });
+      return;
     }
     const updatedAsignatura = await Asignatura.findByPk(cod_a);
     res.status(200).json({
@@ -65,12 +67,13 @@ export const update = async (req: Request, res: Response): Promise <void> => {
   }
 };
 
-export const remove = async (req: Request, res: Response): Promise <void> => {
+export const remove = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cod_a } = req.params;
     const deleted = await Asignatura.destroy({ where: { cod_a } });
     if (deleted === 0) {
-       res.status(404).json({ statusCode: 404, message: 'Asignatura no encontrada' });
+      res.status(404).json({ statusCode: 404, message: 'Asignatura no encontrada' });
+      return;
     }
     res.status(200).json({
       statusCode: 200,
