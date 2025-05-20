@@ -58,7 +58,7 @@ Asegúrate de tener las siguientes versiones de herramientas:
 
 ---
 ## **🛠 Funcionalidades*
- -CRUD completo para estudiantes, profesores y asignaturas.
+ CRUD completo para estudiantes, profesores y asignaturas.
 
  Registro de materias impartidas por profesores.
 
